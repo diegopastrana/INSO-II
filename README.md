@@ -35,16 +35,14 @@
 - Discusiones sobre **emulación y hardware retro**.
 
 ### 🔍 Web Scraping con Playwright
-- Extracción de **precios e imágenes** de videojuegos en diferentes tiendas para comparación en tiempo real.
+- Extracción de **precios** de videojuegos en diferentes tiendas para comparación en tiempo real.
 
 ### 🔗 Enlaces a Emuladores y Recursos Retro
 - Listado de **emuladores recomendados** para jugar en distintas plataformas.
 - Guías de **configuración de emuladores** y optimización de juegos antiguos.
 
 ### 🏷 Sistema de Favoritos y Notificaciones
-- **Lista de videojuegos favoritos** y alertas cuando:
-  - **Bajen de precio**
-  - **Se vuelvan a poner en stock**
+- **Lista de videojuegos favoritos**
 - **Notificaciones** sobre nuevas adiciones de juegos similares a los favoritos del usuario.
 
 ---
