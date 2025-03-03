@@ -1,0 +1,5 @@
+CREA UNA BASE DE DATOS
+
+pip install podman-compose
+podman machine start
+podman compose up -d

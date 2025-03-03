@@ -1,0 +1,16 @@
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-kotlin
+    environment:
+      MYSQL_DATABASE: kotlin_project
+      MYSQL_USER: kt_user
+      MYSQL_PASSWORD: kt_pass
+      MYSQL_ROOT_PASSWORD: rootpass
+    ports:
+      - 3306:3306
+    volumes:
+      - kotlin_project_data:/var/lib/mysql
+
+volumes:
+  kotlin_project_data:
