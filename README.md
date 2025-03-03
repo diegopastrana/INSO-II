@@ -12,15 +12,7 @@
   - **Consola**
   - **Género**
   - **Año de lanzamiento**
-- Sistema de **carrito de compra** y **favoritos**.
-- **Gestión de stock** y **alertas de disponibilidad**.
-
-### 🎮 Comparador de Videojuegos
-- Comparación entre **ediciones de un mismo juego** (diferencias entre versiones de distintas consolas o reediciones).
-- Comparación entre **juegos similares** según:
-  - **Género**
-  - **Desarrolladora**
-  - **Mecánicas de juego**
+- Sistema de **carrito de compra**
 
 ### 🤖 IA de Recomendación (Ollama3)
 - **Chatbot** que sugiere videojuegos según características específicas:
@@ -29,21 +21,9 @@
   - **Historia**
   - **Duración**
 
-### 💬 Foro para la Comunidad Gamer
-- Espacio donde los usuarios pueden **intercambiar opiniones y experiencias** sobre juegos retro.
-- Sección de **compra-venta** entre particulares para encontrar juegos difíciles de conseguir.
-- Discusiones sobre **emulación y hardware retro**.
 
-### 🔍 Web Scraping con Playwright
-- Extracción de **precios** de videojuegos en diferentes tiendas para comparación en tiempo real.
-
-### 🔗 Enlaces a Emuladores y Recursos Retro
-- Listado de **emuladores recomendados** para jugar en distintas plataformas.
-- Guías de **configuración de emuladores** y optimización de juegos antiguos.
-
-### 🏷 Sistema de Favoritos y Notificaciones
-- **Lista de videojuegos favoritos**
-- **Notificaciones** sobre nuevas adiciones de juegos similares a los favoritos del usuario.
+### 🏷 Plataforma de Compra
+- **Se podrá comprar gracias a stripe**
 
 ---
 
