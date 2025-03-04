@@ -14,6 +14,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Grant execute permission for Gradle
+        working-directory: Backend/ktor-project
+        run: chmod +x gradlew
+
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
@@ -36,16 +40,11 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: 'Front/retro_game/package-lock.json'
 
-      - name: Install dependencies if needed
+      - name: Install dependencies
         working-directory: Front/retro_game
-        run: |
-          if [ ! -d "node_modules" ]; then
-            echo "Instalando dependencias..."
-            npm install
-          else
-            echo "Las dependencias ya existen."
-          fi
+        run: npm install
 
       - name: Start Next.js Dev Server
         working-directory: Front/retro_game
