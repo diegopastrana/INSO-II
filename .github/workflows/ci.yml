@@ -10,6 +10,22 @@ jobs:
   backend:
     name: Build & Test Kotlin Backend
     runs-on: ubuntu-latest
+
+    # Declaramos MySQL como servicio
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: testdb
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "mysqladmin ping --silent"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,8 +40,27 @@ jobs:
           distribution: temurin
           java-version: '11'
 
+      - name: Wait for MySQL
+        # Esperamos hasta que el contenedor MySQL pase el healthcheck
+        run: |
+          for i in {1..30}; do
+            if docker exec $(docker ps -q -f "name=mysql") mysqladmin ping --silent; then
+              echo "MySQL is up!"
+              exit 0
+            fi
+            echo "Waiting for MySQL..."
+            sleep 2
+          done
+          echo "MySQL not responding, failing..."
+          exit 1
+
       - name: Build and Test Backend
         working-directory: Backend/ktor-project
+        env:
+          # Variables que tu código podría usar para conectarse
+          DB_URL: jdbc:mysql://localhost:3306/testdb
+          DB_USER: root
+          DB_PASSWORD: root
         run: ./gradlew build
 
   frontend:
