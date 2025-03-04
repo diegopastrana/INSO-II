@@ -32,10 +32,20 @@
 
 /* Modo final: desplaza el título a la esquina superior izquierda */
 .final .titleContainer {
+  font-size: 35px;
   top: 20px;
   left: 20px;
   transform: none;
   text-align: left;
+}
+
+/* Título y subtítulo con tamaño aumentado */
+.title {
+  font-size: 50px; /* Doble tamaño, ajustar si es necesario */
+}
+
+.subtitle {
+  font-size: 2rem; /* Ajusta según el tamaño original */
 }
 
 /* Buscador (inicialmente oculto) */
@@ -45,25 +55,19 @@
   right: 20px;
   display: flex;
   align-items: center;
-  background: #fff;               /* Fondo blanco */
-  border-radius: 8px;             /* Bordes redondeados */
-  padding: 12px 12px;             /* Aumenta el padding vertical para mayor altura */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   opacity: 0;
   transition: opacity 2s ease;
 }
 
-/* Modo final: se muestra el buscador */
+/* Modo final: se muestra el buscador y se desplaza hacia la izquierda */
 .final .search {
   width: 30%;
   opacity: 1;
-}
-
-/* Estilos para el ícono de la lupa */
-.searchIcon {
-  margin-right: 8px;
-  width: 24px;
-  height: 24px;
+  margin-right: 100px; /* Ajusta la separación a la izquierda */
 }
 
 /* Estilos para el input del buscador */
@@ -79,7 +83,6 @@
   box-sizing: border-box;
 }
 
-
 /* Main: contenido principal debajo del header */
 .main {
   margin-top: 100vh; /* Durante el splash, el main queda debajo del header completo */
@@ -93,4 +96,63 @@
 .finalMain {
   margin-top: 30vh;
   min-height: calc(100vh - 30vh);
+}
+
+/* Sección de filtros */
+.filterContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) auto;
+  gap: 16px;
+  align-items: end;
+  padding: 20px;
+  background-color: black;
+  margin-bottom: 20px;
+}
+
+.filterGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.filterItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.filterItem label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: black;
+}
+
+.filterItem input,
+.filterItem select {
+  padding: 8px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+.filterItem input[type="range"] {
+  width: 100%;
+}
+
+.filterButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filterButton button {
+  padding: 10px 20px;
+  background-color: #0070f3;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 100%;
+}
+
+.filterButton button:hover {
+  background-color: #005bb5;
 }
