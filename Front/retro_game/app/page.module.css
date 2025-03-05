@@ -1,22 +1,38 @@
-/* Header con la imagen de fondo */
+/* ----------- Header / Splash ----------- */
 .header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 100vh; /* Splash: pantalla completa */
+  height: 100vh;
   background: url('/juegos-ps2.webp') no-repeat center center;
   background-size: cover;
   transition: height 2s ease;
   z-index: 1;
 }
 
-/* Modo final: header se reduce a 30vh */
+/* Pseudo-elemento para oscurecer la imagen en modo final (no se usa en splash) */
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 2s ease;
+  pointer-events: none;
+}
+
+/* Modo final: header se reduce a 30vh y se muestra el overlay */
 .final {
   height: 30vh;
 }
 
-/* Contenedor del título y subtítulo, inicialmente centrado */
+.final::before {
+  opacity: 1;
+}
+
+/* ----------- Contenedor del título y subtítulo ----------- */
+/* Durante el splash, se aplica una cajita opaca solo detrás del texto */
 .titleContainer {
   position: absolute;
   top: 50%;
@@ -24,31 +40,48 @@
   transform: translate(-50%, -50%);
   text-align: center;
   color: #fff;
-  background: rgba(0, 0, 0, 0.6); /* Cajita semitransparente */
   padding: 20px;
   border-radius: 8px;
-  transition: top 2s ease, left 2s ease, transform 2s ease;
+  background: rgba(0, 0, 0, 0.6);  /* Cajita opaca en splash */
+  transition: background 2s ease, top 2s ease, left 2s ease, transform 2s ease;
+  z-index: 2;
 }
 
-/* Modo final: desplaza el título a la esquina superior izquierda */
+/* Modo final: se quita la cajita y se reposiciona el título */
 .final .titleContainer {
   font-size: 35px;
   top: 20px;
   left: 20px;
   transform: none;
   text-align: left;
+  background: transparent;
 }
 
-/* Título y subtítulo con tamaño aumentado */
+/* ----------- Título y subtítulo ----------- */
+/* En splash, el título es el doble de grande */
 .title {
-  font-size: 50px; /* Doble tamaño, ajustar si es necesario */
+  margin: 0;
+  font-size: 100px; /* Doble tamaño durante el splash */
+  font-family: 'Lobster', cursive;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: #fff;
+  transition: font-size 2s ease;
+}
+
+/* En modo final, el título se reduce a la mitad */
+.final .title {
+  font-size: 50px;
 }
 
 .subtitle {
-  font-size: 2rem; /* Ajusta según el tamaño original */
+  margin: 0;
+  font-size: 2rem;
+  font-family: 'Lobster', cursive;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: #fff;
 }
 
-/* Buscador (inicialmente oculto) */
+/* ----------- Buscador / Iconos de usuario ----------- */
 .search {
   position: absolute;
   top: 20px;
@@ -60,17 +93,18 @@
   padding: 12px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   opacity: 0;
-  transition: opacity 2s ease;
+  transform: translateX(20px);
+  transition: opacity 2s ease, transform 2s ease;
+  z-index: 2;
 }
 
-/* Modo final: se muestra el buscador y se desplaza hacia la izquierda */
 .final .search {
   width: 30%;
   opacity: 1;
-  margin-right: 100px; /* Ajusta la separación a la izquierda */
+  transform: translateX(0);
+  margin-right: 100px;
 }
 
-/* Estilos para el input del buscador */
 .search input {
   border: none;
   font-size: 1rem;
@@ -83,76 +117,80 @@
   box-sizing: border-box;
 }
 
-/* Main: contenido principal debajo del header */
+.search input:focus {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+.userIcon {
+  margin-left: 10px;
+}
+
+/* ----------- Main / Contenido Principal ----------- */
 .main {
-  margin-top: 100vh; /* Durante el splash, el main queda debajo del header completo */
+  margin-top: 100vh;
   transition: margin-top 2s ease, min-height 2s ease;
   background: #f5f5f5;
   padding: 20px;
   min-height: 0;
 }
 
-/* En modo final, main se posiciona justo debajo del header reducido */
 .finalMain {
   margin-top: 30vh;
   min-height: calc(100vh - 30vh);
 }
 
-/* Sección de filtros */
+/* ----------- Filtros ----------- */
 .filterContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr) auto;
   gap: 16px;
   align-items: end;
   padding: 20px;
-  background-color: black;
+  background-color: #222;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   margin-bottom: 20px;
+  color: #fff;
 }
 
-.filterGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.filterItem {
+.filter {
   display: flex;
   flex-direction: column;
 }
 
-.filterItem label {
+.filter label {
   margin-bottom: 8px;
   font-weight: bold;
-  color: black;
+  color: #fff;
 }
 
-.filterItem input,
-.filterItem select {
+.filter select,
+.filter input {
   padding: 8px;
-  border: 1px solid black;
+  border: 1px solid #ccc;
   border-radius: 4px;
+  background-color: #fff;
+  color: #000;
 }
 
-.filterItem input[type="range"] {
+.priceFilter label {
+  margin-bottom: 8px;
+}
+
+.priceFilter input[type="range"] {
   width: 100%;
 }
 
-.filterButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.filterButton button {
+.applyButton {
   padding: 10px 20px;
   background-color: #0070f3;
-  color: black;
+  color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  height: 100%;
+  transition: background-color 0.3s ease;
 }
 
-.filterButton button:hover {
+.applyButton:hover {
   background-color: #005bb5;
 }
