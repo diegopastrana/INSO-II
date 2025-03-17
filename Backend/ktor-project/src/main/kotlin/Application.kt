@@ -13,10 +13,10 @@ import org.jetbrains.exposed.sql.SchemaUtils
 
 fun initDatabase() {
     Database.connect(
-        url="jdbc:mysql://localhost:3306/kotlin_project?useSSL=false&serverTimezone=UTC",
-        driver="com.mysql.cj.jdbc.Driver",
-        user="kt_user",
-        password="kt_pass"
+        url = "jdbc:postgresql://dpg-cvc6s8btq21c739rqcgg-a.frankfurt-postgres.render.com/retrogames",
+        driver = "org.postgresql.Driver",
+        user = "retrogames_user",
+        password = "7zBD93L80mD0LpX0ESp0riOxzV1YUMyL"
     )
 }
 

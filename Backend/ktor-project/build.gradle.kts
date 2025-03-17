@@ -40,6 +40,8 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
 
+    implementation("org.postgresql:postgresql:42.5.4")
+
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
 }
