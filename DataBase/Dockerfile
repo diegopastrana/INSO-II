@@ -1,0 +1,6 @@
+FROM mysql:8
+ENV MYSQL_DATABASE: kotlin_project
+ENV MYSQL_USER: kt_user
+ENV MYSQL_PASSWORD: kt_pass
+ENV MYSQL_ROOT_PASSWORD: rootpass
+EXPOSE 3306
