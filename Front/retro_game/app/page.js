@@ -7,7 +7,7 @@ export default function Home() {
   const [finalLayout, setFinalLayout] = useState(false);
   const [filters, setFilters] = useState({
     genre: "",
-    year: 1900,
+    year: 2000,
     price: 100,
   });
 

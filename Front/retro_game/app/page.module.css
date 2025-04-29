@@ -6,9 +6,9 @@
   right: 0;
   height: 100vh;
   background: url('/juegos-ps2.webp') no-repeat center center;
-  background-size: cover;
   transition: height 2s ease;
   z-index: 1;
+  border-bottom: 3px solid var(--accent);
 }
 
 /* Pseudo-elemento para oscurecer la imagen en modo final (no se usa en splash) */
@@ -16,7 +16,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   opacity: 0;
   transition: opacity 2s ease;
   pointer-events: none;
@@ -42,7 +42,7 @@
   color: #fff;
   padding: 20px;
   border-radius: 8px;
-  background: rgba(0, 0, 0, 0.6);  /* Cajita opaca en splash */
+  background: rgba(0, 0, 0, 0.4);  /* Cajita opaca en splash */
   transition: background 2s ease, top 2s ease, left 2s ease, transform 2s ease;
   z-index: 2;
 }
@@ -58,27 +58,30 @@
 }
 
 /* ----------- Título y subtítulo ----------- */
-/* En splash, el título es el doble de grande */
+/* En splash, el título es el doble de grande 
+   /* Doble tamaño durante el splash */
 .title {
   margin: 0;
-  font-size: 100px; /* Doble tamaño durante el splash */
-  font-family: 'Lobster', cursive;
+  font-family: var(--font-pixel), monospace;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-size: 100px;
   color: #fff;
   transition: font-size 2s ease;
 }
 
-/* En modo final, el título se reduce a la mitad */
+/* En modo final, el título se reduce a la mitad 
+  
+*/
 .final .title {
   font-size: 50px;
 }
 
 .subtitle {
   margin: 0;
-  font-size: 2rem;
   font-family: 'Lobster', cursive;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   color: #fff;
+  font-size: 2rem;
 }
 
 /* ----------- Buscador / Iconos de usuario ----------- */
@@ -129,10 +132,12 @@
 .main {
   margin-top: 100vh;
   transition: margin-top 2s ease, min-height 2s ease;
-  background: #f5f5f5;
   padding: 20px;
   min-height: 0;
+  background: linear-gradient(180deg, #2a003f 0%, #0c001a 100%);
+  color: var(--foreground);
 }
+
 
 .finalMain {
   margin-top: 30vh;
@@ -146,12 +151,12 @@
   gap: 16px;
   align-items: end;
   padding: 20px;
-  background-color: #222;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  margin-bottom: 20px;
-  color: #fff;
+  background: transparent;
+  border-radius: 12px;
+  margin: 30px auto;
+  width: 90%;
 }
+
 
 .filter {
   display: flex;
@@ -159,19 +164,26 @@
 }
 
 .filter label {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   font-weight: bold;
-  color: #fff;
+  color: var(--accent);
+  font-family: var(--font-pixel), monospace;
+  text-shadow: 0 0 2px var(--accent);
 }
+
 
 .filter select,
 .filter input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  color: #000;
+  padding: 10px;
+  border: 2px solid var(--highlight);
+  border-radius: 6px;
+  background-color: #0f0f1f;
+  color: var(--foreground);
+  font-family: var(--font-pixel), monospace;
+  font-size: 0.85rem;
+  box-shadow: 0 0 8px var(--highlight);
 }
+
 
 .priceFilter label {
   margin-bottom: 8px;
@@ -183,14 +195,18 @@
 
 .applyButton {
   padding: 10px 20px;
-  background-color: #0070f3;
-  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--highlight));
+  color: #000;
+  font-weight: bold;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  text-shadow: 0 0 3px white;
+  box-shadow: 0 0 10px var(--accent);
+  transition: transform 0.2s ease;
 }
 
 .applyButton:hover {
-  background-color: #005bb5;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--highlight);
 }
