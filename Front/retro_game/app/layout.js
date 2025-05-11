@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Press_Start_2P } from "next/font/google";
+import { CartProvider } from "./cartContext";
 
 const pixelFont = Press_Start_2P({
   weight: "400",
@@ -28,7 +29,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${pixelFont.variable}`}>
-        {children}
+        <CartProvider>
+          {children}
+        </CartProvider>
       </body>
     </html>
   );
