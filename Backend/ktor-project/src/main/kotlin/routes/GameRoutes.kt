@@ -100,5 +100,62 @@ fun Application.configureGameRoutes() {
                 )
             )
         }
+        get("/api/games/{id}") {
+            val id = call.parameters["id"]?.toIntOrNull()
+            if (id == null) {
+                call.respond(HttpStatusCode.BadRequest, "ID inválido")
+                return@get
+            }
+
+            val juego = transaction {
+                Videojuegos.selectAll().where( Videojuegos.id eq id )
+                    .map {
+                        Videojuego(
+                            id = it[Videojuegos.id].value,
+                            nombre = it[Videojuegos.nombre],
+                            precio = it[Videojuegos.precio].toDouble(),
+                            descripcion = it[Videojuegos.description]
+                        )
+                    }
+                    .singleOrNull()
+            }
+
+            if (juego == null) {
+                call.respond(HttpStatusCode.NotFound, "Juego no encontrado")
+            } else {
+                call.respond(juego)
+            }
+        }
+
+        post("/api/games/{id}") {
+            val nuevoJuego = call.receive<Videojuego>()
+
+            val idInsertado = transaction {
+                Videojuegos.insert {
+                    it[nombre] = nuevoJuego.nombre
+                    it[precio] = nuevoJuego.precio.toBigDecimal()
+                    it[description] = nuevoJuego.descripcion
+                }
+            }
+
+            call.respond(HttpStatusCode.Created, mapOf("id" to idInsertado))
+        }
+
+        delete("/api/games/{id}") {
+            call.sessions.get<UserSession>() ?: return@delete call.respond(HttpStatusCode.Unauthorized)
+            if (!call.requireRole("admin")) return@delete
+
+            val id = call.parameters["id"]?.toIntOrNull()
+                ?: return@delete call.respond(HttpStatusCode.BadRequest, "ID inválido")
+
+            val eliminados = transaction {
+                Videojuegos.deleteWhere { Videojuegos.id eq id }
+            }
+
+            if (eliminados > 0)
+                call.respond(HttpStatusCode.OK, "Eliminado correctamente")
+            else
+                call.respond(HttpStatusCode.NotFound, "Juego no encontrado")
+        }
     }
 }
