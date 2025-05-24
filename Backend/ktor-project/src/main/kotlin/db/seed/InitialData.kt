@@ -12,7 +12,9 @@ import java.io.File
 data class GameSeed(
   val nombre: String,
   val precio: Double,
-  val descripcion: String
+  val descripcion: String,
+  val cover: String,
+  val genero: String
 )
 
 fun insertInitialGames() {
@@ -23,11 +25,9 @@ fun insertInitialGames() {
     ?: throw IllegalStateException("No se encontró seed/games.json en resources")
   val gamesText = File(resource.toURI()).readText()
 
-  // 2) Deserializar el JSON
   val json = Json { ignoreUnknownKeys = true }
   val games: List<GameSeed> = json.decodeFromString(gamesText)
 
-  // 3) Insertar en la BD si la tabla está vacía
   transaction {
     if (Videojuegos.selectAll().empty()) {
       println("Insertando ${games.size} videojuegos iniciales...")
@@ -36,6 +36,8 @@ fun insertInitialGames() {
           it[nombre] = g.nombre
           it[precio] = g.precio.toBigDecimal()
           it[description] = g.descripcion
+          it[cover] = g.cover
+          it[genero] = g.genero
         }
         println("Juego Insertado")
       }

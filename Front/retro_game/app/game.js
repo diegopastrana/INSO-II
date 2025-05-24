@@ -16,6 +16,11 @@ export default function Game({game}) {
             <p>
             {game.precio}
             </p>
+            <img src={game.cover}>
+            </img>
+            <p>
+            {game.genero}
+            </p>
             <button onClick={handleCLick}>{"Añadir al carrito"}</button>
         </div>
     )

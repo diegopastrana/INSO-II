@@ -43,14 +43,15 @@ IGDB_HEADERS = {
 
 # --- Paginación y extracción de IGDB ---
 all_games = []
-LIMIT = 500
+LIMIT = 50
 offset = 0
+TOTAL_GAMES = 50
 
 print("🔄 Extrayendo juegos de IGDB y asignando precios ficticios...")
 
-while True:
+while len(all_games) < TOTAL_GAMES:
     query = f"""
-        fields name, summary;
+        fields name, summary, cover.url, genres.name, language_supports, similar_games.name;
         limit {LIMIT};
         offset {offset};
     """
@@ -62,8 +63,14 @@ while True:
         break
 
     for g in batch:
+        print(g)
         name = g.get("name", "").strip()
         desc = g.get("summary", "") or ""
+        first_genre = g.get("genres", [{"name": "Unkown"}])[0].get('name', "")
+        cover = g.get("cover", {}).get("url", "")
+
+        if cover != "":
+            cover = "https:" + cover
 
         # Generar precio ficticio: N(MEAN_PRICE, STD_DEV)
         fake_price = round(max(0.99, random.gauss(MEAN_PRICE, STD_DEV)), 2)
@@ -71,7 +78,9 @@ while True:
         all_games.append({
             "nombre":      name,
             "precio":      fake_price,
-            "descripcion": desc
+            "descripcion": desc,
+            "genero": first_genre,
+            "cover": cover
         })
 
     offset += LIMIT
