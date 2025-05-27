@@ -1,55 +1,61 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 
-export default function Fiters(props) {
-    return(
-        <div className={styles.filterContainer}>
-          <div className={styles.filter}>
-            <label htmlFor="genre">Género:</label>
-            <select
-              id="genre"
-              name="genre"
-              value={props.filters.genre}
-              onChange={props.handleFilterChange}
-            >
-              <option value="">Selecciona un género</option>
-              <option value="accion">Acción</option>
-              <option value="aventura">Aventura</option>
-              <option value="rpg">RPG</option>
-              <option value="plataformas">Plataformas</option>
-              <option value="deportes">Deportes</option>
-              <option value="puzzle">Puzzle</option>
-            </select>
-          </div>
-          <div className={styles.filter}>
-            <label htmlFor="year">Año:</label>
-            <input
-              type="number"
-              id="year"
-              name="year"
-              value={props.filters.year}
-              min="1850"
-              onChange={props.handleFilterChange}
-            />
-          </div>
-          <div className={`${styles.filter} ${styles.priceFilter}`}>
-            <label htmlFor="price">Precio: {props.filters.price}€</label>
-            <input
-              type="range"
-              id="price"
-              name="price"
-              min="1"
-              max="200"
-              value={props.filters.price}
-              onChange={props.handleFilterChange}
-            />
-          </div>
-          <button className={styles.applyButton} onClick={props.applyFilters}>
-            Aplicar filtros
-          </button>
-        </div>
-    )
-    
+export default function Filters({ filters, handleFilterChange, applyFilters }) {
+  return (
+    <div className={styles.filterContainer}>
+      {/* FILTRO POR GÉNERO */}
+      <div className={styles.filter}>
+        <label htmlFor="genero">Género:</label>
+        <select
+          id="genero"
+          name="genero"
+          value={filters.genero}
+          onChange={handleFilterChange}
+        >
+          <option value="">Todos</option>
+          <option value="Racing">Racing</option>
+          <option value="Shooter">Shooter</option>
+          <option value="Fighting">Fighting</option>
+          <option value="Puzzle">Puzzle</option>
+          <option value="Platform">Platform</option>
+          <option value="Strategy">Strategy</option>
+          <option value="Adventure">Adventure</option>
+          <option value="Simulator">Simulator</option>
+          <option value="Indie">Indie</option>
+          <option value="Arcade">Arcade</option>
+          <option value="Role-playing (RPG)">RPG</option>
+          <option value="Hack and slash/Beat 'em up">Hack and Slash</option>
+          <option value="Visual Novel">Visual Novel</option>
+          <option value="Sports">Sports</option>
+        </select>
+      </div>
+
+      {/* FILTRO POR PRECIO */}
+      <div className={styles.filter}>
+        <label htmlFor="precio">Precio (máx. 30 €):</label>
+        <input
+          type="number"
+          id="precio"
+          name="precio"
+          value={filters.precio}
+          min="1"
+          max="30"
+          onChange={handleFilterChange}
+        />
+      </div>
+
+
+      {/* BOTÓN DE APLICAR FILTROS */}
+      <button
+        type="button"
+        className={styles.applyButton}
+        onClick={applyFilters}
+      >
+        Aplicar filtros
+      </button>
+
+    </div>
+  );
 }
