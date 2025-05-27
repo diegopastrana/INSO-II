@@ -1,7 +1,5 @@
-import ClientHome from "./clientHome";
+import { redirect } from 'next/navigation';
 
-export default async function Home() {
- const res = await fetch("http://localhost:8080/api/games");
- const games = await res.json();
- return <ClientHome initialGames = {games}/>
+export default function Home() {
+  redirect('/page/1');
 }
