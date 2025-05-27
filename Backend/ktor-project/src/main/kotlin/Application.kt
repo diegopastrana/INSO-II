@@ -18,6 +18,7 @@ import io.ktor.server.application.Application
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
+
 fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
 }
@@ -34,6 +35,24 @@ fun Application.module() {
             PedidoItems,
             Carrito
         )
+    }
+
+    intercept(ApplicationCallPipeline.Setup) {
+        call.response.headers.append(
+            "Content-Security-Policy",
+            "default-src 'self'; connect-src 'self' http://localhost:8080/"
+        )
+    }
+
+    install(CORS) {
+        anyHost() // NOTE: restrict in production
+        allowCredentials = true
+        allowHeader(HttpHeaders.ContentType)
+        allowHeader(HttpHeaders.Authorization)
+        allowMethod(HttpMethod.Get)
+        allowMethod(HttpMethod.Post)
+        allowMethod(HttpMethod.Put)
+        allowMethod(HttpMethod.Delete)
     }
 
     insertInitialGames()
