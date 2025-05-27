@@ -74,6 +74,7 @@ export default function ClientHome({ initialGames, initialPage }) {
       <header className={`${styles.header} ${finalLayout ? styles.final : ""}`}>
         <div className={styles.titleContainer}>
           <h1 className={styles.title}>RetroGameHub</h1>
+          <p className={styles.subtitle}>Tu Tienda De Videojuegos Retro</p>
         </div>
 
         <div className={styles.search}>
@@ -97,7 +98,7 @@ export default function ClientHome({ initialGames, initialPage }) {
             }}
           />
 
-          <a href="http://localhost:8080/login">
+          <a href="https://inso-ii.onrender.com/login">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"

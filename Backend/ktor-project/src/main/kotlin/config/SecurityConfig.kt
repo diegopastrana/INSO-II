@@ -40,7 +40,8 @@ import org.jetbrains.exposed.sql.transactions.transaction
 fun Application.configureSecurity() {
     install(Authentication) {
         oauth("auth-oauth-google") {
-            urlProvider = { "http://localhost:8080/callback" }
+            //http:localhost:8080
+            urlProvider = { "https://inso-ii.onrender.com/callback" }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
                     name = "google",
@@ -116,7 +117,7 @@ fun Application.configureSecurity() {
                     )
                 )
 
-                call.respondRedirect("http://localhost:3000")
+                call.respondRedirect("/api/users/me")
             }
         }
     }

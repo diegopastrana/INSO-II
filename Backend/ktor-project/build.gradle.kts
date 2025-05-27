@@ -39,6 +39,7 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation:3.1.2")
     implementation("io.ktor:ktor-client-content-negotiation:3.1.2")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
+    implementation("io.ktor:ktor-server-cors:3.1.2")
 
     implementation("org.postgresql:postgresql:42.7.2")
 

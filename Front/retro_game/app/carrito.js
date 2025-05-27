@@ -44,17 +44,7 @@ export default function Carrito({ onClose }) {
             <div className={styles.checkoutSection}>
               <h3>Resumen del pedido</h3>
               <p>Total: {total} €</p>
-
-              {compraFinalizada ? (
-                <p className={styles.confirmacion}>✅ ¡Compra realizada con éxito!</p>
-              ) : (
-                <form className={styles.checkoutForm} onSubmit={handleSubmit}>
-                  <input type="text" placeholder="Nombre completo" required />
-                  <input type="email" placeholder="Correo electrónico" required />
-                  <input type="text" placeholder="Dirección de envío" required />
-                  <button type="submit">Finalizar compra</button>
-                </form>
-              )}
+              <a href="/checkout">Finalizar compra</a>
             </div>
           </>
         )}

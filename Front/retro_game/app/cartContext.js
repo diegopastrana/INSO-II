@@ -5,21 +5,19 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const CartContext = createContext();
 
 // 🧩 URL configurable desde .env.local
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://inso-ii.onrender.com";
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const getToken = () => (typeof window !== 'undefined' ? localStorage.getItem('token') : null);
-
   const fetchCart = async () => {
     setLoading(true);
     try {
-      const token = getToken();
       const res = await fetch(`${API_BASE_URL}/api/cart`, {
+        credentials: 'include',
         headers: {
-          Authorization: `Bearer ${token}`
+          'Content-Type': 'application/json'
         }
       });
 
@@ -36,12 +34,11 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = async (videojuegoId, cantidad = 1) => {
     try {
-      const token = getToken();
       await fetch(`${API_BASE_URL}/api/cart`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({ videojuegoId, cantidad })
       });
@@ -54,11 +51,11 @@ export const CartProvider = ({ children }) => {
 
   const removeFromCart = async (videojuegoId) => {
     try {
-      const token = getToken();
       await fetch(`${API_BASE_URL}/api/cart/${videojuegoId}`, {
         method: 'DELETE',
+        credentials: 'include',
         headers: {
-          Authorization: `Bearer ${token}`
+          'Content-Type': 'application/json'
         }
       });
 

@@ -57,9 +57,7 @@ fun Application.configureGameRoutes() {
                         id = row[Videojuegos.id].value,
                         nombre = row[Videojuegos.nombre],
                         precio = row[Videojuegos.precio].toDouble(),
-                        descripcion = row[Videojuegos.description],
-                        cover = row[Videojuegos.cover],
-                        genero = row[Videojuegos.genero]
+                        descripcion = row[Videojuegos.description]
                     )
                 }
                 list to cnt
@@ -102,6 +100,7 @@ fun Application.configureGameRoutes() {
                 )
             )
         }
+
         get("/api/games/{id}") {
             val id = call.parameters["id"]?.toIntOrNull()
             if (id == null) {
@@ -116,9 +115,7 @@ fun Application.configureGameRoutes() {
                             id = it[Videojuegos.id].value,
                             nombre = it[Videojuegos.nombre],
                             precio = it[Videojuegos.precio].toDouble(),
-                            descripcion = it[Videojuegos.description],
-                            cover = it[Videojuegos.cover],
-                            genero = it[Videojuegos.genero]
+                            descripcion = it[Videojuegos.description]
                         )
                     }
                     .singleOrNull()
@@ -139,8 +136,6 @@ fun Application.configureGameRoutes() {
                     it[nombre] = nuevoJuego.nombre
                     it[precio] = nuevoJuego.precio.toBigDecimal()
                     it[description] = nuevoJuego.descripcion
-                    it[cover] = nuevoJuego.cover
-                    it[genero] = nuevoJuego.genero
                 }
             }
 
