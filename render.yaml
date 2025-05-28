@@ -1,0 +1,47 @@
+databases:
+  - name: posgres
+    plan: free
+    databaseName: kotlin_project_hqxr 
+    user: kt_user 
+    region: frankfurt
+
+services:
+- type: web
+  name: next-js
+  repo: https://github.com/diegopastrana/INSO-II.git
+  rootDir: Front/retro_game
+  runtime: node
+  plan: free
+  buildCommand: npm; npm build
+  startCommand: npm start
+  autoDeploy: false
+  envVars:
+  - key: NODE_ENV
+    value: production
+  - key: STRIPE_PUBLICABLE_KEY
+    value: pk_test_51RK0vPRs3l2T7fmcHfTEXhsV94OFpO8s61CoqhczrFFnHKkVV3vyJiTsb1VExB9N2xlUEnr2bGWksc8Hei37yWev00BqDd1nnl
+  - key: NEXT_PUBLIC_API_URL
+    fromService:
+      name: api_ktor
+      type: pserv
+      property: host
+
+
+- type: web
+  name: api_ktor
+  repo: https://github.com/diegopastrana/INSO-II.git
+  rootDir: Backend/ktor-project
+  runtime: docker
+  plan: free
+  autoDeploy: false
+  envVars:
+    - key: DATA_BASE_URL
+      fromDatabase:
+        name: posgres
+        property: connectionString 
+    - key: GOOGLE_CLIENT_ID
+      value: 374053166012-7211t8lpg7bsr5i47khrf16prskb6tf5.apps.googleusercontent.com
+    - key: GOOGLE_CLIENT_SECRET
+      value: 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
+    - key: STRIPE_API_KEY
+      value: sk_test_51RK0vPRs3l2T7fmczX85zKHPtYQEd0lCc2cpOfoj8d6MuTnmeh6uJsucn1PdSxfTq5QhI6SoQnYWkpnznGWFG5mk00EJnNfep1
