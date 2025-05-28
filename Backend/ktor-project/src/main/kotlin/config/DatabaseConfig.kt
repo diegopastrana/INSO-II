@@ -5,7 +5,7 @@ import org.jetbrains.exposed.sql.Database
 
 fun initDatabase() {
     Database.connect(
-        url = "jdbc:postgresql://${System.getenv("DB_HOST")}:${System.getenv("DB_PORT")}/${System.getenv("DB_NAME")}",
+        url = "jdbc:${System.getenv("DATA_BASE_URL")}",
         driver = "org.postgresql.Driver",
         user = System.getenv("DB_USER"),
         password = System.getenv("DB_PASSWORD")
