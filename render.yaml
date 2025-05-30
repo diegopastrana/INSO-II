@@ -15,10 +15,18 @@ services:
     plan: free
     autoDeploy: false
     envVars:
-      - key: DATA_BASE_URL
+      - key: DB_HOST
         fromDatabase:
           name: posgres
-          property: connectionString
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: posgres
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: posgres
+          property: database
       - key: DB_USER
         fromDatabase:
           name: posgres
