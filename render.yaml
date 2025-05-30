@@ -15,10 +15,18 @@ services:
     plan: free
     autoDeploy: false
     envVars:
-      - key: DATABASE_URL
+      - key: DATA_BASE_URL
         fromDatabase:
           name: posgres
           property: connectionString
+      - key: DB_USER
+        fromDatabase:
+          name: posgres
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: posgres
+          property: password
       - key: GOOGLE_CLIENT_ID
         value: 374053166012-7211t8lpg7bsr5i47khrf16prskb6tf5.apps.googleusercontent.com
       - key: GOOGLE_CLIENT_SECRET
