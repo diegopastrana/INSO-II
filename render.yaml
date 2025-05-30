@@ -1,15 +1,15 @@
 databases:
   - name: posgres
     plan: free
-    databaseName: kotlin_project_hqxr_ioln    # coincide con “Database”
-    user: kotlin_project_hqxr_ioln_user       # coincide con “Username”
-    region: oregon                            # slug de Oregon (US West)
+    databaseName: posgres_0sj7          # tu “Database”
+    user: posgres_0sj7_user             # tu “Username”
+    region: frankfurt                    # ahora en Frankfurt
 
 services:
 
   - type: web
     name: api_ktor
-    region: oregon                            # misma región que la DB
+    region: frankfurt
     repo: https://github.com/diegopastrana/INSO-II.git
     rootDir: Backend/ktor-project
     runtime: docker
@@ -29,7 +29,7 @@ services:
 
   - type: web
     name: next-js
-    region: oregon                            # misma región que la DB
+    region: frankfurt
     repo: https://github.com/diegopastrana/INSO-II.git
     rootDir: Front/retro_game
     runtime: node
