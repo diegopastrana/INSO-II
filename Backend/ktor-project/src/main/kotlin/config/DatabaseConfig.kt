@@ -6,11 +6,11 @@ import org.jetbrains.exposed.sql.Database
 fun initDatabase() {
     val host     = System.getenv("DB_HOST")!!
     val port     = System.getenv("DB_PORT")!!
-    val name     = System.getenv("DB_NAME")!!
+    val dbName   = System.getenv("DB_NAME")!!
     val user     = System.getenv("DB_USER")!!
     val password = System.getenv("DB_PASSWORD")!!
 
-    val jdbcUrl = "jdbc:postgresql://$host:$port/$name?sslmode=require"
+    val jdbcUrl = "jdbc:postgresql://$host:$port/$dbName?sslmode=require"
 
     Database.connect(
         url      = jdbcUrl,
@@ -19,4 +19,6 @@ fun initDatabase() {
         password = password
     )
 }
+
+
 
