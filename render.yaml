@@ -3,11 +3,13 @@ databases:
     plan: free
     databaseName: kotlin_project_hqxr
     user: kt_user
-    region: frankfurt
+    region: frankfurt     # la base de datos en Frankfurt
 
 services:
+
   - type: web
     name: api_ktor
+    region: frankfurt     # <— aquí
     repo: https://github.com/diegopastrana/INSO-II.git
     rootDir: Backend/ktor-project
     runtime: docker
@@ -27,6 +29,7 @@ services:
 
   - type: web
     name: next-js
+    region: frankfurt     # si tu front también necesita acceder a la API/DB
     repo: https://github.com/diegopastrana/INSO-II.git
     rootDir: Front/retro_game
     runtime: node
