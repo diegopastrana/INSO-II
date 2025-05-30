@@ -1,9 +1,9 @@
 databases:
   - name: posgres
     plan: free
-    databaseName: posgres_0sj7          # tu “Database”
-    user: posgres_0sj7_user             # tu “Username”
-    region: frankfurt                    # ahora en Frankfurt
+    databaseName: posgres_cafn         # tu “Database”
+    user: posgres_cafn_user             # tu “Username”
+    region: frankfurt                   # sigue en Frankfurt
 
 services:
 
