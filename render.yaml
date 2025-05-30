@@ -15,7 +15,7 @@ services:
     plan: free
     autoDeploy: false
     envVars:
-      - key: DATA_BASE_URL
+      - key: DATABASE_URL            # renombrado aquí
         fromDatabase:
           name: posgres
           property: connectionString 
@@ -33,9 +33,7 @@ services:
     runtime: node
     plan: free
     autoDeploy: false
-    # Instalación y build en un solo comando válido en bash
     buildCommand: "npm install && npm run build"
-    # Asegúrate de que en package.json tengas un "start" script (por ejemplo: next start)
     startCommand: "npm start"
     envVars:
       - key: NODE_ENV
