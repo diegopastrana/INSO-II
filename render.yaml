@@ -18,23 +18,23 @@ services:
       - key: DB_HOST
         fromDatabase:
           name: posgres
-          property: host
+          property: host        # == el hostname, p. ej. dpg-…amazonaws.com
       - key: DB_PORT
         fromDatabase:
           name: posgres
-          property: port
+          property: port        # == el número de puerto (5432)
       - key: DB_NAME
         fromDatabase:
           name: posgres
-          property: database
+          property: database    # == kotlin_project_hqxr
       - key: DB_USER
         fromDatabase:
           name: posgres
-          property: user
+          property: user        # == kt_user
       - key: DB_PASSWORD
         fromDatabase:
           name: posgres
-          property: password
+          property: password    # == la contraseña
       - key: GOOGLE_CLIENT_ID
         value: 374053166012-7211t8lpg7bsr5i47khrf16prskb6tf5.apps.googleusercontent.com
       - key: GOOGLE_CLIENT_SECRET
