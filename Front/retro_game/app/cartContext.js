@@ -5,7 +5,8 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const CartContext = createContext();
 
 // 🧩 URL configurable desde .env.local
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://inso-ii.onrender.com";
+// || "https://inso-ii.onrender.com"
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);

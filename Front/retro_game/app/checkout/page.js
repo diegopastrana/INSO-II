@@ -8,7 +8,7 @@ import CheckoutForm from './checkout';
 const stripePromise = loadStripe('pk_test_51RK0vPRs3l2T7fmcHfTEXhsV94OFpO8s61CoqhczrFFnHKkVV3vyJiTsb1VExB9N2xlUEnr2bGWksc8Hei37yWev00BqDd1nnl');
 
 const fetchClientSecret = () => {
-  return fetch('https://inso-ii.onrender.com/api/create-payment-intent', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }})
+  return fetch(`https://${process.env.NEXT_PUBLIC_API_URL}/api/create-payment-intent`, { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }})
     .then((response) => response.json())
     .then((json) => json.clientSecret)
 };
