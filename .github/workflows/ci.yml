@@ -1,91 +1,40 @@
-name: CI/CD
+name: Kotlin CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  backend:
-    name: Build & Test Kotlin Backend
+  build:
     runs-on: ubuntu-latest
-
-    # Declaramos MySQL como servicio
-    services:
-      mysql:
-        image: mysql:8
-        env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: testdb
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd "mysqladmin ping --silent"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 3
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Grant execute permission for Gradle
-        working-directory: Backend/ktor-project
-        run: chmod +x gradlew
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper/
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
-      - name: Set up JDK 11
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: '11'
+          java-version: 17
+          cache: gradle
 
-      - name: Wait for MySQL
-        # Esperamos hasta que el contenedor MySQL pase el healthcheck
-        run: |
-          for i in {1..30}; do
-            if docker exec $(docker ps -q -f "name=mysql") mysqladmin ping --silent; then
-              echo "MySQL is up!"
-              exit 0
-            fi
-            echo "Waiting for MySQL..."
-            sleep 2
-          done
-          echo "MySQL not responding, failing..."
-          exit 1
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x ./gradlew
 
-      - name: Build and Test Backend
-        working-directory: Backend/ktor-project
-        env:
-          # Variables que tu código podría usar para conectarse
-          DB_URL: jdbc:mysql://localhost:3306/testdb
-          DB_USER: root
-          DB_PASSWORD: root
-        run: ./gradlew build
-
-  frontend:
-    name: Start Next.js Dev Server and Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: 'Front/retro_game/package-lock.json'
-
-      - name: Install dependencies
-        working-directory: Front/retro_game
-        run: npm install
-
-      - name: Start Next.js Dev Server
-        working-directory: Front/retro_game
-        run: |
-          nohup npm run dev &
-          echo "Esperando 10 segundos para que arranque el servidor..."
-          sleep 10
-          echo "Verificando que el servidor responde en http://localhost:3000"
-          curl -sSf http://localhost:3000
+      - name: Build & Test with Gradle
+        run: ./gradlew clean build --parallel --configure-on-demand
