@@ -11,7 +11,7 @@ services:
     name: api_ktor
     region: frankfurt
     repo: https://github.com/diegopastrana/INSO-II.git
-    rootDir: Backend/ktor-project
+    rootDir: Backend/ktor-project   # Aquí debe estar el Dockerfile
     runtime: docker
     plan: free
     autoDeploy: false
