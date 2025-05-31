@@ -46,4 +46,4 @@ services:
         fromService:
           name: api_ktor
           type: web
-          property: host
+          envVarKey: RENDER_EXTERNAL_URL
