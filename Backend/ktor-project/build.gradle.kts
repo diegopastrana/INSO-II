@@ -1,10 +1,13 @@
 plugins {
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.ktor)
+    // Kotlin JVM
+    id("org.jetbrains.kotlin.jvm") version "1.8.10"
+    // Plugin oficial de Ktor para Gradle (versión 3.1.2 que ya usas en dependencias)
+    id("io.ktor.plugin") version "3.1.2"
+    // Plugin de serialización de Kotlin
     kotlin("plugin.serialization") version "1.8.10"
+    // Plugin application para poder definir mainClass
     application
-
-    // Usamos la misma versión de Shadow que requiere el plugin de Ktor (8.3.6)
+    // ShadowJar (misma versión 8.3.6 que requiere el plugin de Ktor internamente)
     id("com.github.johnrengelman.shadow") version "8.3.6"
 }
 
@@ -12,8 +15,10 @@ group = "com.example"
 version = "0.0.1"
 
 application {
-    mainClass = "io.ktor.server.netty.EngineMain"
+    // Main class de Ktor con Netty
+    mainClass.set("io.ktor.server.netty.EngineMain")
 
+    // Mantenemos la lógica para modo “development” si queremos pasar el flag -Pdevelopment
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
@@ -48,11 +53,11 @@ dependencies {
     implementation("com.auth0:java-jwt:4.5.0")
     implementation("commons-codec:commons-codec:1.18.0")
 
-    testImplementation(libs.ktor.server.test.host)
-    testImplementation(libs.kotlin.test.junit)
+    testImplementation("io.ktor:ktor-server-test-host:3.1.2")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.8.10")
 }
 
-// Configuración de ShadowJar para empaquetar un fat-jar llamado "app.jar"
+// Configuración de ShadowJar para generar un fat-jar llamado "app.jar"
 tasks {
     shadowJar {
         archiveFileName.set("app.jar")
