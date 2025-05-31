@@ -38,11 +38,13 @@ import org.jetbrains.exposed.sql.insertIgnore
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun Application.configureSecurity() {
-    val apiBaseUrl = System.getenv("API_URL")
+    val apiBaseUrl = System.getenv("API_URL") ?: error("API_URL no configurada")
+    val clientId = System.getenv("GOOGLE_CLIENT_ID") ?: error("GOOGLE_CLIENT_ID no configurada")
+    val clientSecret = System.getenv("GOOGLE_CLIENT_SECRET") ?: error("GOOGLE_CLIENT_SECRET no configurada")
+    val jwtSecret = System.getenv("JWT_SECRET") ?: error("JWT_SECRET no configurada")
 
     install(Authentication) {
         oauth("auth-oauth-google") {
-            //http:localhost:8080
             urlProvider = { "$apiBaseUrl/callback" }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
@@ -50,30 +52,26 @@ fun Application.configureSecurity() {
                     authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
                     accessTokenUrl = "https://oauth2.googleapis.com/token",
                     requestMethod = HttpMethod.Post,
-                    clientId = System.getenv("GOOGLE_CLIENT_ID"),
-                    clientSecret = System.getenv("GOOGLE_CLIENT_SECRET"),
+                    clientId = clientId,
+                    clientSecret = clientSecret,
                     defaultScopes = listOf("openid", "profile", "email")
                 )
             }
             client = HttpClient(CIO)
         }
 
-
         jwt("auth-jwt") {
             realm = "ktor-app"
             verifier(
-                JWT
-                    .require(Algorithm.HMAC256(System.getenv("JWT_SECRET") ?: "dev-secret"))
+                JWT.require(Algorithm.HMAC256(jwtSecret))
                     .withIssuer("ktor-api")
                     .withAudience("ktor-users")
                     .build()
             )
             validate { credential ->
-                if (credential.payload.subject != null) JWTPrincipal(credential.payload) else null
+                credential.payload.subject?.let { JWTPrincipal(credential.payload) }
             }
-
             authHeader {
-                // Extraer token desde cookie
                 it.request.cookies["AUTH_TOKEN"]?.let { token ->
                     HttpAuthHeader.Single("Bearer", token)
                 }
@@ -85,16 +83,11 @@ fun Application.configureSecurity() {
         authenticate("auth-oauth-google") {
             get("/login") {}
             get("/callback") {
-                val principal = call.authentication.principal<OAuthAccessTokenResponse.OAuth2>()
-                if (principal == null) {
-                    call.respondText("Authentication failed", status = HttpStatusCode.Unauthorized)
-                    return@get
-                }
+                val principal = call.principal<OAuthAccessTokenResponse.OAuth2>()
+                    ?: return@get call.respondText("Auth failed", HttpStatusCode.Unauthorized)
 
-                // Obtener perfil desde Google
                 val profile = fetchGoogleProfile(principal.accessToken)
 
-                // Guardar o actualizar usuario
                 transaction {
                     Usuarios.insertIgnore {
                         it[id] = profile.id
@@ -104,18 +97,16 @@ fun Application.configureSecurity() {
                     }
                 }
 
-                val jwt = JwtService.generateToken(userId = profile.id, email = profile.email)
+                val jwt = JwtService.generateToken(profile.id, profile.email)
 
                 call.response.cookies.append(
                     Cookie(
-                        name = "AUTH_TOKEN",
-                        value = jwt,
-                        domain = null,
-                        path = "/",
+                        "AUTH_TOKEN",
+                        jwt,
                         httpOnly = true,
-                        secure = apiBaseUrl.startsWith("https"), // Cambia a false en local sin HTTPS
+                        secure = apiBaseUrl.startsWith("https"),
                         extensions = mapOf("SameSite" to "Lax"),
-                        maxAge = 60 * 60 * 24
+                        maxAge = 86400
                     )
                 )
 
@@ -124,6 +115,7 @@ fun Application.configureSecurity() {
         }
     }
 }
+
 
 private suspend fun fetchGoogleProfile(accessToken: String): Usuario {
     val client = HttpClient(CIO) {
