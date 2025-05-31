@@ -1,14 +1,10 @@
-FROM gradle:8.14.0-jdk21 AS build
+FROM gradle:7-jdk11 AS build
 WORKDIR /app
 
 COPY . .
 RUN chmod +x gradlew
-RUN ./gradlew clean shadowJar -x test --no-daemon
-
-FROM eclipse-temurin:21-jre-alpine
-WORKDIR /app
-
-COPY --from=build /app/build/libs/*-all.jar /app/app.jar
+RUN ./gradlew build
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+
+CMD ["./gradlew", "run"]
