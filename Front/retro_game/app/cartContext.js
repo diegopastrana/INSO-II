@@ -15,7 +15,7 @@ export const CartProvider = ({ children }) => {
   const fetchCart = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`https://${API_BASE_URL}/api/cart`, {
+      const res = await fetch(`${API_BASE_URL}/api/cart`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
@@ -35,7 +35,7 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = async (videojuegoId, cantidad = 1) => {
     try {
-      await fetch(`https://${API_BASE_URL}/api/cart`, {
+      await fetch(`${API_BASE_URL}/api/cart`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -52,7 +52,7 @@ export const CartProvider = ({ children }) => {
 
   const removeFromCart = async (videojuegoId) => {
     try {
-      await fetch(`https://${API_BASE_URL}/api/cart/${videojuegoId}`, {
+      await fetch(`${API_BASE_URL}/api/cart/${videojuegoId}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {
