@@ -13,7 +13,9 @@ import org.jetbrains.exposed.sql.transactions.transaction
 data class GameSeed(
   val nombre: String,
   val precio: Double,
-  val descripcion: String
+  val descripcion: String,
+  val cover: String,
+  val genero: String
 )
 
 @OptIn(ExperimentalSerializationApi::class)
@@ -36,6 +38,8 @@ fun insertInitialGames() {
           it[nombre] = g.nombre
           it[precio] = g.precio.toBigDecimal()
           it[description] = g.descripcion
+          it[cover] = g.cover
+          it[genero] = g.genero
         }
         println("Juego Insertado")
       }
