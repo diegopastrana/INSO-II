@@ -38,10 +38,12 @@ import org.jetbrains.exposed.sql.insertIgnore
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun Application.configureSecurity() {
+    val apiBaseUrl = System.getenv("API_URL")
+
     install(Authentication) {
         oauth("auth-oauth-google") {
             //http:localhost:8080
-            urlProvider = { "https://inso-ii.onrender.com/callback" }
+            urlProvider = { "$apiBaseUrl/callback" }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
                     name = "google",
@@ -108,10 +110,10 @@ fun Application.configureSecurity() {
                     Cookie(
                         name = "AUTH_TOKEN",
                         value = jwt,
-                        domain = "localhost",
+                        domain = null,
                         path = "/",
                         httpOnly = true,
-                        secure = false, // Cambia a false en local sin HTTPS
+                        secure = apiBaseUrl.startsWith("https"), // Cambia a false en local sin HTTPS
                         extensions = mapOf("SameSite" to "Lax"),
                         maxAge = 60 * 60 * 24
                     )
