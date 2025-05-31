@@ -57,7 +57,9 @@ fun Application.configureGameRoutes() {
                         id = row[Videojuegos.id].value,
                         nombre = row[Videojuegos.nombre],
                         precio = row[Videojuegos.precio].toDouble(),
-                        descripcion = row[Videojuegos.description]
+                        descripcion = row[Videojuegos.description],
+                        cover = row[Videojuegos.cover],
+                        genero = row[Videojuegos.genero]
                     )
                 }
                 list to cnt
@@ -115,7 +117,9 @@ fun Application.configureGameRoutes() {
                             id = it[Videojuegos.id].value,
                             nombre = it[Videojuegos.nombre],
                             precio = it[Videojuegos.precio].toDouble(),
-                            descripcion = it[Videojuegos.description]
+                            descripcion = it[Videojuegos.description],
+                            cover = it[Videojuegos.cover],
+                            genero = it[Videojuegos.genero]
                         )
                     }
                     .singleOrNull()
@@ -136,6 +140,8 @@ fun Application.configureGameRoutes() {
                     it[nombre] = nuevoJuego.nombre
                     it[precio] = nuevoJuego.precio.toBigDecimal()
                     it[description] = nuevoJuego.descripcion
+                    it[cover] = nuevoJuego.cover
+                    it[genero] = nuevoJuego.genero
                 }
             }
 
