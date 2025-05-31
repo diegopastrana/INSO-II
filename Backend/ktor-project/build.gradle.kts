@@ -4,8 +4,8 @@ plugins {
     kotlin("plugin.serialization") version "1.8.10"
     application
 
-    // =====> Agregamos ShadowJar
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    // Usamos la misma versión de Shadow que requiere el plugin de Ktor (8.3.6)
+    id("com.github.johnrengelman.shadow") version "8.3.6"
 }
 
 group = "com.example"
@@ -52,7 +52,7 @@ dependencies {
     testImplementation(libs.kotlin.test.junit)
 }
 
-// Configuración de ShadowJar para producir un JAR “fat” llamado app.jar
+// Configuración de ShadowJar para empaquetar un fat-jar llamado "app.jar"
 tasks {
     shadowJar {
         archiveFileName.set("app.jar")
