@@ -7,6 +7,8 @@ import Filters from "./filters";
 import Game from "./game";
 import Carrito from "./carrito";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function ClientHome({ initialGames, initialPage }) {
   const [finalLayout, setFinalLayout] = useState(false);
   const [filters, setFilters] = useState({
@@ -98,7 +100,7 @@ export default function ClientHome({ initialGames, initialPage }) {
             }}
           />
 
-          <a href="https://inso-ii.onrender.com/login">
+          <a href={API_BASE_URL+"/login"}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"
