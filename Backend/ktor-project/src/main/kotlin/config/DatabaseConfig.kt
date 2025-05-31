@@ -1,7 +1,7 @@
 package com.example.config
 
-import io.ktor.server.util.url
 import org.jetbrains.exposed.sql.Database
+import java.net.URI
 
 fun initDatabase() {
 
