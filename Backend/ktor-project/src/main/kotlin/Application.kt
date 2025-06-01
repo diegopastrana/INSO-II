@@ -30,6 +30,17 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
+
+  val frontendUrlFull = System.getenv("FRONTEND_URL")
+    ?: throw IllegalStateException("No se ha encontrado la variable de entorno FRONTEND_URL")
+
+  val frontendHost = try {
+    val uri = java.net.URI.create(frontendUrlFull)
+    uri.host // p. ej. "mi-front-end.onrender.com"
+  } catch (e: Exception) {
+    throw IllegalStateException("FRONTEND_URL no es una URI válida: $frontendUrlFull")
+  }
+
   configureSerialization()
   initDatabase()
 
@@ -44,12 +55,12 @@ fun Application.module() {
   }
 
   intercept(ApplicationCallPipeline.Setup) {
-    call.response.headers.append(
-      "Content-Security-Policy",
-      //http://localhost:8080
-      //https://inso-ii.onrender.com
-      "default-src 'self'; connect-src 'self' https://inso-ii.onrender.com"
-    )
+    val cspValue = buildString {
+      append("default-src 'self'; ")
+      append("connect-src 'self' ")
+      append(frontendUrlFull)  // p.ej. "https://mi-front-end.onrender.com/"
+    }
+    call.response.headers.append("Content-Security-Policy", cspValue)
   }
 
   install(CORS) {
