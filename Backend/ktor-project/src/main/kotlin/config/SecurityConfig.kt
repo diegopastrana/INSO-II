@@ -113,7 +113,7 @@ fun Application.configureSecurity() {
                         name = "AUTH_TOKEN",
                         value = jwt,
                         httpOnly = true,
-                        domain = "next-js-obe9.onrender.com",
+                        domain = frontendHost,
                         secure = true,
                         extensions = mapOf("SameSite" to "None"),
                         maxAge = 60 * 60 * 24
@@ -121,7 +121,7 @@ fun Application.configureSecurity() {
                 )
                 println("✅ Login exitoso. JWT generado: $jwt")
                 println("✅ front: $frontendHost")
-                call.respondRedirect(frontendUrlFull)
+                call.respondRedirect("$frontendUrlFull?token=$jwt")
             }
         }
     }
