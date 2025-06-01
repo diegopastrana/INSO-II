@@ -108,7 +108,6 @@ fun Application.configureSecurity() {
                 } catch (e: Exception) {
                     throw IllegalStateException("FRONTEND_URL no es una URI válida: $frontendUrlFull")
                 }
-
                 call.response.cookies.append(
                     Cookie(
                         name = "AUTH_TOKEN",
@@ -121,7 +120,7 @@ fun Application.configureSecurity() {
                     )
                 )
 
-                call.respondRedirect("/api/users/me")
+                call.respondRedirect(frontendUrlFull)
             }
         }
     }
