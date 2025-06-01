@@ -114,7 +114,7 @@ fun Application.configureSecurity() {
                         value = jwt,
                         httpOnly = true,
                         domain = "onrender.com",
-                        secure = frontendUrlFull.startsWith("https"),
+                        secure = false,
                         extensions = mapOf("SameSite" to "Lax"),
                         maxAge = 60 * 60 * 24
                     )
