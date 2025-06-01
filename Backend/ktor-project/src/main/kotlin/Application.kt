@@ -64,8 +64,8 @@ fun Application.module() {
   }
 
   install(CORS) {
-    anyHost() // NOTE: restrict in production
-    allowCredentials = true
+    allowHost("next-js-obe9.onrender.com", schemes = listOf("https"))
+    allowCredentials = true // ⬅️ MUY IMPORTANTE
     allowHeader(HttpHeaders.ContentType)
     allowHeader(HttpHeaders.Authorization)
     allowHeader(HttpHeaders.Cookie)
@@ -73,6 +73,7 @@ fun Application.module() {
     allowMethod(HttpMethod.Post)
     allowMethod(HttpMethod.Put)
     allowMethod(HttpMethod.Delete)
+    anyHost()
   }
 
   insertInitialGames()
