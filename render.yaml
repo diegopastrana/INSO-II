@@ -29,10 +29,7 @@ services:
       - key: JWT_SECRET
         value: pipo1234
       - key: FRONTEND_URL
-        fromService:
-          name: next-js
-          type: web
-          envVarKey: RENDER_EXTERNAL_URL
+        value: https://next-js-obe9.onrender.com
 
   - type: web
     name: next-js
