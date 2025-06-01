@@ -29,7 +29,7 @@ services:
       - key: JWT_SECRET
         value: pipo1234
       - key: FRONTEND_URL
-        value: https://next-js-obe9.onrender.com
+        value: https://next-js-mjsb.onrender.com
 
   - type: web
     name: next-js
