@@ -7,5 +7,5 @@ object Videojuegos : IntIdTable("videojuegos") {
     val precio = decimal("precio", 10,2)
     val description = text("description")
     val cover = varchar("cover", 255)
-    val genero = varchar("cover", 255)
+    val genero = varchar("genero", 255)
 }
