@@ -55,6 +55,10 @@ fun Application.configureCartRoutes() {
             }
 
             post("/api/cart") {
+
+                val token = call.request.cookies["AUTH_TOKEN"]
+                println("🎯 Cookie AUTH_TOKEN recibida: $token")
+
                 val principal = call.principal<JWTPrincipal>()
                     ?: return@post call.respond(HttpStatusCode.Unauthorized)
                 val userId = principal.subject ?: return@post call.respond(HttpStatusCode.BadRequest)

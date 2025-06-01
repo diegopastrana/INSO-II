@@ -71,8 +71,7 @@ fun Application.configureSecurity() {
                 credential.payload.subject?.let { JWTPrincipal(credential.payload) }
             }
             authHeader { call ->
-                val token = call.request.cookies["AUTH_TOKEN"]
-                println("🎯 Cookie AUTH_TOKEN recibida: $token")
+
                 call.request.cookies["AUTH_TOKEN"]?.let { token ->
                     HttpAuthHeader.Single("Bearer", token)
                 }
