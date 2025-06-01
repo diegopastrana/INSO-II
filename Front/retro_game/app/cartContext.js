@@ -14,6 +14,7 @@ export const CartProvider = ({ children }) => {
 
   const fetchCart = async () => {
     setLoading(true);
+    console.log("🌐 API_BASE_URL:", API_BASE_URL);
     try {
       const res = await fetch(`${API_BASE_URL}/api/cart`, {
         credentials: 'include',
