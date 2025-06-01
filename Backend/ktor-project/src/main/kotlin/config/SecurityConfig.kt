@@ -113,7 +113,7 @@ fun Application.configureSecurity() {
                         name = "AUTH_TOKEN",
                         value = jwt,
                         httpOnly = true,
-                        domain = "next-js-cemh.onrender.com",
+                        domain = "next-js-cdu8.onrender.com",
                         secure = true,
                         extensions = mapOf("SameSite" to "None"),
                         maxAge = 60 * 60 * 24
