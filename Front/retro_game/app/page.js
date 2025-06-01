@@ -8,7 +8,7 @@ export default function Home() {
   useEffect(() => {
     const token = new URLSearchParams(window.location.search).get("token");
     if (token) {
-      document.cookie = `AUTH_TOKEN=${token}; Path=/; Secure; SameSite=None`;
+      document.cookie = `AUTH_TOKEN=${token}; Domain=.onrender.com; Path=/; Secure; SameSite=None`;
     }
 
     router.replace("/page/1"); // redirige sí o sí

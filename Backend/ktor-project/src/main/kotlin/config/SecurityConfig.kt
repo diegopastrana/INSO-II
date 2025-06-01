@@ -114,7 +114,7 @@ fun Application.configureSecurity() {
                         name = "AUTH_TOKEN",
                         value = jwt,
                         httpOnly = true,
-                        domain = frontendHost,
+                        domain = ".onrender.com",
                         secure = true,
                         extensions = mapOf("SameSite" to "None"),
                         maxAge = 60 * 60 * 24
