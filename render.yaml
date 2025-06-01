@@ -50,7 +50,4 @@ services:
       - key: STRIPE_PUBLICABLE_KEY
         value: pk_test_51RK0vPRs3l2T7fmcHfTEXhsV94OFpO8s61CoqhczrFFnHKkVV3vyJiTsb1VExB9N2xlUEnr2bGWksc8Hei37yWev00BqDd1nnl
       - key: NEXT_PUBLIC_API_URL
-        fromService:
-          name: api_ktor
-          type: web
-          envVarKey: RENDER_EXTERNAL_URL
+        value: https://api-ktor.onrender.com
