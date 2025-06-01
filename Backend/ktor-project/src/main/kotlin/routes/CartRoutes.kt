@@ -88,12 +88,16 @@ fun Application.configureCartRoutes() {
             }
 
             put("/api/cart") {
-                val session = call.sessions.get<UserSession>() ?: return@put call.respond(HttpStatusCode.Unauthorized)
+
+                val principal = call.principal<JWTPrincipal>()
+                    ?: return@put call.respond(HttpStatusCode.Unauthorized)
+
+                val userId = principal.subject ?: return@put call.respond(HttpStatusCode.BadRequest)
                 val request = call.receive<CarritoRequest>()
 
                 val actualizado = transaction {
                     Carrito.update({
-                        (Carrito.usuarioId eq session.userId) and (Carrito.videojuegoId eq request.videojuegoId)
+                        (Carrito.usuarioId eq userId) and (Carrito.videojuegoId eq request.videojuegoId)
                     }) {
                         it[cantidad] = request.cantidad
                     }
@@ -106,14 +110,17 @@ fun Application.configureCartRoutes() {
             }
 
             delete("/api/cart/{gameId}") {
-                val session =
-                    call.sessions.get<UserSession>() ?: return@delete call.respond(HttpStatusCode.Unauthorized)
+                val principal = call.principal<JWTPrincipal>()
+                    ?: return@delete call.respond(HttpStatusCode.Unauthorized)
+
+                val userId = principal.subject ?: return@delete call.respond(HttpStatusCode.BadRequest)
+
                 val gameId = call.parameters["gameId"]?.toIntOrNull()
                     ?: return@delete call.respond(HttpStatusCode.BadRequest, "ID inválido")
 
                 val eliminado = transaction {
                     Carrito.deleteWhere {
-                        (Carrito.usuarioId eq session.userId) and (Carrito.videojuegoId eq gameId)
+                        (Carrito.usuarioId eq userId) and (Carrito.videojuegoId eq gameId)
                     }
                 }
 
