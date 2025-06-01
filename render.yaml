@@ -26,11 +26,6 @@ services:
         value: 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
       - key: STRIPE_API_KEY
         value: sk_test_51RK0vPRs3l2T7fmczX85zKHPtYQEd0lCc2cpOfoj8d6MuTnmeh6uJsucn1PdSxfTq5QhI6SoQnYWkpnznGWFG5mk00EJnNfep1
-      - key: API_URL
-        fromService:
-          name: api_ktor
-          type: web
-          envVarKey: RENDER_EXTERNAL_URL
 
   - type: web
     name: next-js
