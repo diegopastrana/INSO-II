@@ -70,8 +70,10 @@ fun Application.configureSecurity() {
             validate { credential ->
                 credential.payload.subject?.let { JWTPrincipal(credential.payload) }
             }
-            authHeader {
-                it.request.cookies["AUTH_TOKEN"]?.let { token ->
+            authHeader { call ->
+                val token = call.request.cookies["AUTH_TOKEN"]
+                println("🎯 Cookie AUTH_TOKEN recibida: $token")
+                call.request.cookies["AUTH_TOKEN"]?.let { token ->
                     HttpAuthHeader.Single("Bearer", token)
                 }
             }
